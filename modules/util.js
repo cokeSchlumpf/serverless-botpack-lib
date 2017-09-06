@@ -2,11 +2,8 @@ const _ = require('lodash');
 const Validator = require('better-validator');
 
 const defaultErrorHandler = (error) => {
-  if (_.get(error, 'error.message')) {
-    return Promise.resolve({
-      statusCode: _.get(error, 'statusCode', 500),
-      error
-    });
+  if (_.get(error, 'error.message') && _.get(error, 'error.statusCode')) {
+    return Promise.resolve(error);
   } else {
     return Promise.resolve({
       statusCode: 500,
@@ -50,7 +47,7 @@ const validatePayload = (payload, state) => {
         });
       });
 
-      return validate(validator);
+      return validate(validator).then(() => payload);
     case 'MIDDLEWARE':
       return validatePayload(payload, 'INPUT')
         .then(() => {
@@ -65,7 +62,7 @@ const validatePayload = (payload, state) => {
             obj('messagecontext').isObject();
           });
 
-          return validate(validator);
+          return validate(validator).then(() => payload);
         });
     default:
       return Promise.reject({
