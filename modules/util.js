@@ -64,6 +64,8 @@ const validatePayload = (payload, state) => {
             });
             obj('messagecontext').isObject();
           });
+
+          return validate(validator);
         });
     default:
       return Promise.reject({
