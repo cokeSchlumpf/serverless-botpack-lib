@@ -1,0 +1,8 @@
+deploy:
+  provider: npm
+  email: info@michaelwellner.de
+  api_key:
+    secure: sfPCy5Dow3vtS8HOE1zfUWHDU5oRhCqnHzeb2x7aQ+v+Y84LpcYPCs3U+YMu45R5ArKkI9fOHKZsjo4bPuukhDiy/UpFKGkThLULmzdHSRmy28Ll45JoFcvLqRRMs7bF1ptxfyP8sG04/8ylTW+Cw+VBPalUA1j597eA2PzuyipmknToAi3mKkM7T1veXljAc/1+PY83crm4zmkUFN30saZ0nLKKAcjNdMTvvC5QkWfE/5hNzlSMDo9zScHxWHcTM8mjWtmJFLqKFjXRNsyN9fKn0hl0wN15RDw/VpOG7I28I7WFZ3sgco+1nK6gBxjijggM55d6h1BfEoC6uuiXQwCfPWKcot4NqprPpW0+IZ8e1pSrcprPLfeDl3eSFOteFkuK1wOL2jUtf2iYBlAYBaHX3zdh/XEqjzU9zPNUyf2t9FExp3KnqoNDLQcgyJ9Li47I/gFZUGekuyH0Tff8bZZisJ6LWJs81y2gpPLd3TGLA2hkW4S35lOQnMN+rXTWgYyyQvMcbQdLMO9h+XjFzNw593b90DPPcMdO56rPER/DHyZmyM1AtHXmmLaOMNoVcnjUG/GEbT8jIAZKPh3dgyIdLVDbO5Fcp2lZb6MV8SK7Bdgzr22mTdlB3UqoJ6B7Y+7hfO8gxV6xggCuBOrAzlIIa5zhMumUeYRpgT9LX+8=
+  on:
+    tags: true
+    repo: cokeSchlumpf/serverless-botpack-lib
