@@ -41,7 +41,7 @@ const validatePayload = (payload, state) => {
     case 'INPUT':
       const validator = new Validator();
 
-      validator(result).required().isObject(obj => {
+      validator(payload).required().isObject(obj => {
         obj('payload').required().isObject(obj => {
           obj('id').required().isString();
           obj('input').required().isObject(obj => {

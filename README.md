@@ -1,4 +1,4 @@
-# openwhisk-chatbot-framework
+# serverless-botpack-lib
 
 A framework to build chatbots on the OpenWhisk platform. This is a util library of the framework.
 
