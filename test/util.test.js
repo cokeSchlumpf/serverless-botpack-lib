@@ -165,6 +165,132 @@ describe('util', () => {
     });
   });
 
+  describe('util.defaultAsyncResultHandler', () => {
+    it('it logs the result of an asynchronuous action as an error if there is no statusCode', () => {
+      // create stubs for actual functions
+      const invokeStub = sinon.stub()
+        .returns(Promise.resolve());
+
+      // mock openwhisk action calls to return successful results
+      requireMock('openwhisk', () => ({
+        actions: {
+          invoke: invokeStub
+        }
+      }));
+
+      // sample configuration used for the test
+      const config = {
+        logger: {
+          level: 'DEBUG'
+        },
+        openwhisk: {
+          package: 'testpackage'
+        }
+      };
+
+      requireMock.reRequire('openwhisk');
+
+      return requireMock
+        .reRequire('../index')({ config })
+        .util.defaultAsyncResultHandler(["1", "2", "3"])
+        .then(result => {
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/logger');
+          chai.expect(invokeStub.getCall(0).args[0].params.message).to.equal(JSON.stringify({
+            statusCode: 500,
+            error: "Action result is not valid",
+            parameters: {
+              result: ["1", "2", "3"]
+            }
+          }, null, 2));
+          chai.expect(invokeStub.getCall(0).args[0].params.level).to.equal('ERROR');
+        });
+    });
+
+    it('logs the result of an asynchronuous action as debug message', () => {
+      // create stubs for actual functions
+      const invokeStub = sinon.stub()
+        .returns(Promise.resolve());
+  
+      // mock openwhisk action calls to return successful results
+      requireMock('openwhisk', () => ({
+        actions: {
+          invoke: invokeStub
+        }
+      }));
+  
+      // sample configuration used for the test
+      const config = {
+        logger: {
+          level: 'DEBUG'
+        },
+        openwhisk: {
+          package: 'testpackage'
+        }
+      };
+  
+      requireMock.reRequire('openwhisk');
+  
+      return requireMock
+        .reRequire('../index')({ config })
+        .util.defaultAsyncResultHandler({
+          statusCode: 200,
+          result: ["1", "2", "3"]
+        })
+        .then(result => {
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/logger');
+          chai.expect(invokeStub.getCall(0).args[0].params.message).to.equal(JSON.stringify({
+            statusCode: 200,
+            result: ["1", "2", "3"]
+          }, null, 2));
+          chai.expect(invokeStub.getCall(0).args[0].params.level).to.equal('DEBUG');
+        });
+    });
+
+    it('logs an error if an error is the result', () => {
+      // create stubs for actual functions
+      const invokeStub = sinon.stub()
+        .returns(Promise.resolve());
+  
+      // mock openwhisk action calls to return successful results
+      requireMock('openwhisk', () => ({
+        actions: {
+          invoke: invokeStub
+        }
+      }));
+  
+      // sample configuration used for the test
+      const config = {
+        logger: {
+          level: 'DEBUG'
+        },
+        openwhisk: {
+          package: 'testpackage'
+        }
+      };
+  
+      requireMock.reRequire('openwhisk');
+  
+      return requireMock
+        .reRequire('../index')({ config })
+        .util.defaultAsyncResultHandler({
+          statusCode: 400,
+          error: {
+            message: 'There was an error;'
+          }
+        })
+        .then(result => {
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/logger');
+          chai.expect(invokeStub.getCall(0).args[0].params.message).to.equal(JSON.stringify({
+            statusCode: 400,
+            error: {
+              message: 'There was an error;'
+            }
+          }, null, 2));
+          chai.expect(invokeStub.getCall(0).args[0].params.level).to.equal('ERROR');
+        });
+    });
+  });
+
   describe('util.defaultErrorHandler', () => {
     it('forwards an existing valid error', () => {
       const config = {}
@@ -178,7 +304,7 @@ describe('util', () => {
             parameters: {
               'foo': 'bar'
             },
-            cause: { }
+            cause: {}
           }
         })
         .then(result => {

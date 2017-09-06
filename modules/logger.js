@@ -5,7 +5,7 @@ const LEVELS = ['DEBUG', 'INFO', 'WARN', 'ERROR'];
 module.exports = (params, ow) => {
   const log = (level) => (message) => {
     if (_.indexOf(LEVELS, level) >= _.indexOf(LEVELS, params.config.logger.level)) {
-      const logmessage = _.isFunction(message) ? message() : message;
+      const logmessage = _.isString(message) ? message : _.isFunction(message) ? message() : JSON.stringify(message, null, 2);
 
       return ow.actions.invoke({
         name: `${_.get(params, 'config.openwhisk.package')}/logger`,

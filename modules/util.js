@@ -1,5 +1,24 @@
 const _ = require('lodash');
 const Validator = require('better-validator');
+const logger = require('./logger');
+
+const defaultAsyncResultHandler = (log) => (result) => {
+  const statusCode = _.get(result, 'statusCode');
+
+  if (statusCode === 200) {
+    return log.debug(result);
+  } else if (!statusCode) {
+    return log.error({
+      statusCode: 500,
+      error: 'Action result is not valid',
+      parameters: {
+        result
+      }
+    });
+  } else {
+    return log.error(result);
+  }
+}
 
 const defaultErrorHandler = (error) => {
   if (_.get(error, 'error.message') && _.get(error, 'statusCode')) {
@@ -75,7 +94,10 @@ const validatePayload = (payload, state) => {
 }
 
 module.exports = (params, ow) => {
+  const log = logger(params, ow);
+
   return {
+    defaultAsyncResultHandler: defaultAsyncResultHandler(log),
     defaultErrorHandler,
     validate,
     validatePayload
