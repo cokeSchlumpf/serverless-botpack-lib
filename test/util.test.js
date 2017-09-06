@@ -145,23 +145,62 @@ describe('util', () => {
     it('rejects if the state is not valud', () => {
       // sample configuration used for the test
       const config = {}
-      
-            return requireMock
-              .reRequire('../index')({ config })
-              .util.validatePayload({
-                id: 'abcd',
-                input: {
-                  channel: 'facebook',
-                  user: 'user',
-                  message: 'foo'
-                }
-              }, 'FOO')
-              .then(result => {
-                chai.expect(true).to.be.false;
-              })
-              .catch(error => {
-                chai.expect(true).to.be.true;
-              });
+
+      return requireMock
+        .reRequire('../index')({ config })
+        .util.validatePayload({
+          id: 'abcd',
+          input: {
+            channel: 'facebook',
+            user: 'user',
+            message: 'foo'
+          }
+        }, 'FOO')
+        .then(result => {
+          chai.expect(true).to.be.false;
+        })
+        .catch(error => {
+          chai.expect(true).to.be.true;
+        });
     });
+  });
+
+  describe('util.defaultErrorHandler', () => {
+    it('forwards an existing valid error', () => {
+      const config = {}
+
+      return requireMock
+        .reRequire('../index')({ config })
+        .util.defaultErrorHandler({
+          statusCode: 300,
+          error: {
+            message: 'foo, bar',
+            parameters: {
+              'foo': 'bar'
+            },
+            cause: { }
+          }
+        })
+        .then(result => {
+          chai.expect(result.statusCode).to.equal(300);
+          chai.expect(result.error.message).to.equal('foo, bar');
+          chai.expect(result.error.parameters.foo).to.equal('bar');
+        });
+    });
+
+    it('forwards creates a new error message if it is not a valid error object', () => {
+      const config = {}
+
+      return requireMock
+        .reRequire('../index')({ config })
+        .util.defaultErrorHandler({
+          message: 'bla bla bla'
+        })
+        .then(result => {
+          chai.expect(result.statusCode).to.equal(500);
+          chai.expect(result.error.message).to.equal('Internal Server Error');
+          chai.expect(result.error.cause).to.exist;
+        });
+    })
   });
 })

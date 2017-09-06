@@ -2,7 +2,7 @@ const _ = require('lodash');
 const Validator = require('better-validator');
 
 const defaultErrorHandler = (error) => {
-  if (_.get(error, 'error.message') && _.get(error, 'error.statusCode')) {
+  if (_.get(error, 'error.message') && _.get(error, 'statusCode')) {
     return Promise.resolve(error);
   } else {
     return Promise.resolve({
