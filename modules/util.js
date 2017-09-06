@@ -42,13 +42,11 @@ const validatePayload = (payload, state) => {
       const validator = new Validator();
 
       validator(payload).required().isObject(obj => {
-        obj('payload').required().isObject(obj => {
-          obj('id').required().isString();
-          obj('input').required().isObject(obj => {
-            obj('channel').required().isString();
-            obj('user').required().isString();
-            obj('message').required();
-          });
+        obj('id').required().isString();
+        obj('input').required().isObject(obj => {
+          obj('channel').required().isString();
+          obj('user').required().isString();
+          obj('message').required();
         });
       });
 
