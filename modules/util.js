@@ -6,7 +6,7 @@ const defaultAsyncResultHandler = (log) => (result) => {
   const statusCode = _.get(result, 'statusCode');
 
   if (statusCode === 200) {
-    return log.debug(result);
+    return log.debug(result).then(() => result);
   } else if (!statusCode) {
     return log.error({
       statusCode: 500,
@@ -14,9 +14,9 @@ const defaultAsyncResultHandler = (log) => (result) => {
       parameters: {
         result
       }
-    });
+    }).then(() => result);
   } else {
-    return log.error(result);
+    return log.error(result).then(() => result);
   }
 }
 
