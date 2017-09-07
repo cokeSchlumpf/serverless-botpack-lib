@@ -41,8 +41,8 @@ const validate = (validator, f) => {
     return Promise.reject({
       statusCode: 400,
       error: {
-        message: 'Action parameters are invalid',
-        cause: errors
+        message: 'Validation failed',
+        cause: errors,
       }
     });
   } else if (_.isFunction(f)) {
@@ -74,7 +74,7 @@ const validatePayload = (payload, state) => {
           validator(payload).required().isObject(obj => {
             obj('conversationcontext').required().isObject(obj => {
               obj('user').required().isObject(obj => {
-                obj('id').required().isString();
+                obj('_id').required().isString();
                 obj(`${payload.input.channel}_id`).required().isString();
               });
             });
