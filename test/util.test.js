@@ -107,7 +107,7 @@ describe('util', () => {
           },
           'conversationcontext': {
             user: {
-              id: '12345',
+              _id: '12345',
               facebook_id: '12345678'
             }
           }
