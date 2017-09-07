@@ -3,8 +3,10 @@ const _ = require('lodash');
 const LEVELS = ['DEBUG', 'INFO', 'WARN', 'ERROR'];
 
 module.exports = (params, ow) => {
+  const configLogLevel = _.get(params, 'config.logger.level', 'INFO');
+
   const log = (level) => (message) => {
-    if (_.indexOf(LEVELS, level) >= _.indexOf(LEVELS, params.config.logger.level)) {
+    if (_.indexOf(LEVELS, level) >= _.indexOf(LEVELS, configLogLevel)) {
       const logmessage = _.isString(message) ? message : _.isFunction(message) ? message() : JSON.stringify(message, null, 2);
 
       return ow.actions.invoke({
@@ -18,7 +20,7 @@ module.exports = (params, ow) => {
     } else {
       return Promise.resolve({
         statusCode: 200,
-        message: `Message log level '${level}' below configured log level '${params.config.logger.level}'.`
+        message: `Message log level '${level}' below configured log level '${configLogLevel}'.`
       });
     }
   }
