@@ -33,7 +33,7 @@ describe('logger', () => {
     .reRequire('../index')({ config })
     .log.debug('Hello World!')
     .then(result => {
-      chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/logger');
+      chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-logger');
       chai.expect(invokeStub.getCall(0).args[0].params.message).to.equal('Hello World!');
       chai.expect(invokeStub.getCall(0).args[0].params.level).to.equal('DEBUG');
     });

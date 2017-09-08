@@ -58,7 +58,7 @@ describe('config', () => {
         .reRequire('../index')({ __ow_method: 'get', __ow_path: '/', config })
         .config.get('key', 'defaultValue')
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.selector.type).to.equal('configuration');
           chai.expect(invokeStub.getCall(0).args[0].params.selector.tag).to.equal('config/key');
 
@@ -92,7 +92,7 @@ describe('config', () => {
         .reRequire('../index')({ __ow_method: 'get', __ow_path: '/', config })
         .config.get('key', 'defaultValue')
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.selector.type).to.equal('configuration');
           chai.expect(invokeStub.getCall(0).args[0].params.selector.tag).to.equal('config/key');
 
@@ -129,7 +129,7 @@ describe('config', () => {
           chai.expect(true).to.be.false;
         })
         .catch(error => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.selector.type).to.equal('configuration');
           chai.expect(invokeStub.getCall(0).args[0].params.selector.tag).to.equal('config/key');
 
@@ -181,7 +181,7 @@ describe('config', () => {
         .reRequire('../index')({ __ow_method: 'get', __ow_path: '/', config })
         .config.set('key', 'value_new')
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('read');
           chai.expect(invokeStub.getCall(0).args[0].params.selector.type).to.equal('configuration');
           chai.expect(invokeStub.getCall(0).args[0].params.selector.tag).to.equal('config/key');
@@ -231,7 +231,7 @@ describe('config', () => {
         .reRequire('../index')({ __ow_method: 'get', __ow_path: '/', config })
         .config.set('key', 'value_new')
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('read');
           chai.expect(invokeStub.getCall(0).args[0].params.selector.type).to.equal('configuration');
           chai.expect(invokeStub.getCall(0).args[0].params.selector.tag).to.equal('config/key');

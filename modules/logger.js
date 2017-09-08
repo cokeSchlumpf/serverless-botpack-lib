@@ -23,7 +23,7 @@ module.exports = (params, ow) => {
       winston[level.toLowerCase()](logmessage);
 
       return ow.actions.invoke({
-        name: `${_.get(params, 'config.openwhisk.package')}/logger`,
+        name: `${_.get(params, 'config.openwhisk.package')}/core-logger`,
         params: {
           level: level,
           message: logmessage,

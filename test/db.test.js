@@ -37,7 +37,7 @@ describe('db', () => {
           chai.expect(result._id).to.equal('1234');
           chai.expect(result.foo).to.equal('bar');
 
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.doc.foo).to.equal('bar');
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('create');
         })
@@ -80,7 +80,7 @@ describe('db', () => {
           chai.expect(error.message).to.equal('sample error message');
           chai.expect(error.cause.foo).to.equal('bar');
 
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.doc.foo).to.equal('bar');
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('create');
         });
@@ -119,7 +119,7 @@ describe('db', () => {
         .then(result => {
           chai.expect(result[0]._id).to.equal('1234');
           chai.expect(result[0].foo).to.equal('bar');
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.id).to.be.undefined;
           chai.expect(invokeStub.getCall(0).args[0].params.selector.foo).to.equal('bar');
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('read');
@@ -157,7 +157,7 @@ describe('db', () => {
         .then(result => {
           chai.expect(result._id).to.equal('1234');
           chai.expect(result.foo).to.equal('bar');
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.id).to.equal('1234');
           chai.expect(invokeStub.getCall(0).args[0].params.selector).to.be.undefined;
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('read');
@@ -198,7 +198,7 @@ describe('db', () => {
           chai.expect(result._id).to.equal('1234');
           chai.expect(result.foo).to.equal('bar');
 
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.doc.foo).to.equal('bar');
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('update');
         })
@@ -231,7 +231,7 @@ describe('db', () => {
         .reRequire('../index')({ __ow_method: 'get', __ow_path: '/', config })
         .db.delete('1234')
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.id).to.equal('1234');
           chai.expect(invokeStub.getCall(0).args[0].params.rev).to.be.undefined;
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('delete');
@@ -265,7 +265,7 @@ describe('db', () => {
           _id: '1234'
         })
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.id).to.equal('1234');
           chai.expect(invokeStub.getCall(0).args[0].params.rev).to.be.undefined;
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('delete');
@@ -300,7 +300,7 @@ describe('db', () => {
           _rev: 'abcd'
         })
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.id).to.equal('1234');
           chai.expect(invokeStub.getCall(0).args[0].params.rev).to.equal('abcd');
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('delete');
@@ -332,7 +332,7 @@ describe('db', () => {
         .reRequire('../index')({ __ow_method: 'get', __ow_path: '/', config })
         .db.delete('1234', 'abcd')
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/datastore');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-datastore');
           chai.expect(invokeStub.getCall(0).args[0].params.id).to.equal('1234');
           chai.expect(invokeStub.getCall(0).args[0].params.rev).to.equal('abcd');
           chai.expect(invokeStub.getCall(0).args[0].params.operation).to.equal('delete');

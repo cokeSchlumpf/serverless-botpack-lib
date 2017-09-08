@@ -194,7 +194,7 @@ describe('util', () => {
         .reRequire('../index')({ config })
         .util.defaultAsyncResultHandler(["1", "2", "3"])
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/logger');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-logger');
           chai.expect(invokeStub.getCall(0).args[0].params.message).to.equal(JSON.stringify({
             statusCode: 500,
             error: "Action result is not valid",
@@ -237,7 +237,7 @@ describe('util', () => {
           result: ["1", "2", "3"]
         })
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/logger');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-logger');
           chai.expect(invokeStub.getCall(0).args[0].params.message).to.equal(JSON.stringify({
             statusCode: 200,
             result: ["1", "2", "3"]
@@ -279,7 +279,7 @@ describe('util', () => {
           }
         })
         .then(result => {
-          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/logger');
+          chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/core-logger');
           chai.expect(invokeStub.getCall(0).args[0].params.message).to.equal(JSON.stringify({
             statusCode: 400,
             error: {
