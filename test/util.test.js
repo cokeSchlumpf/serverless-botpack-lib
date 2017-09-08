@@ -201,7 +201,7 @@ describe('util', () => {
             parameters: {
               result: ["1", "2", "3"]
             }
-          }, null, 2));
+          }));
           chai.expect(invokeStub.getCall(0).args[0].params.level).to.equal('ERROR');
         });
     });
@@ -241,7 +241,7 @@ describe('util', () => {
           chai.expect(invokeStub.getCall(0).args[0].params.message).to.equal(JSON.stringify({
             statusCode: 200,
             result: ["1", "2", "3"]
-          }, null, 2));
+          }));
           chai.expect(invokeStub.getCall(0).args[0].params.level).to.equal('DEBUG');
         });
     });
@@ -285,7 +285,7 @@ describe('util', () => {
             error: {
               message: 'There was an error;'
             }
-          }, null, 2));
+          }));
           chai.expect(invokeStub.getCall(0).args[0].params.level).to.equal('ERROR');
         });
     });
