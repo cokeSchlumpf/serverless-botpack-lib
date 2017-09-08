@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 const handleActionResult = (result) => {
-  if (result.statusCode === 200) {
+  if (result.statusCode >= 200 && result.statusCode < 300) {
     return Promise.resolve(result.result);
   } else {
     return Promise.reject(result.error);

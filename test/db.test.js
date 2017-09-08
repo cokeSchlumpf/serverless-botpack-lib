@@ -9,7 +9,7 @@ describe('db', () => {
       // create stubs for actual functions
       const invokeStub = sinon.stub()
         .returns(Promise.resolve({
-          statusCode: 200,
+          statusCode: 201,
           result: {
             _id: '1234',
             foo: 'bar'
