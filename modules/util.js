@@ -41,7 +41,7 @@ const validate = (validator, f) => {
     return Promise.reject({
       statusCode: 400,
       error: {
-        message: 'Validation failed',
+        message: _.isString(f) && f || 'Validation failed',
         cause: errors,
       }
     });
@@ -53,10 +53,10 @@ const validate = (validator, f) => {
 }
 
 const validatePayload = (payload, state) => {
+  const validator = new Validator();
+
   switch (state) {
     case 'INPUT':
-      const validator = new Validator();
-
       validator(payload).required().isObject(obj => {
         obj('id').required().isString();
         obj('input').required().isObject(obj => {
@@ -70,12 +70,11 @@ const validatePayload = (payload, state) => {
     case 'MIDDLEWARE':
       return validatePayload(payload, 'INPUT')
         .then(() => {
-          const validator = new Validator();
           validator(payload).required().isObject(obj => {
             obj('conversationcontext').required().isObject(obj => {
               obj('user').required().isObject(obj => {
                 obj('_id').required().isString();
-                obj(`${payload.input.channel}_id`).required().isString();
+                obj(`${_.get(payload, 'input.channel')}_id`).required().isString();
               });
             });
             obj('messagecontext').isObject();
@@ -83,6 +82,26 @@ const validatePayload = (payload, state) => {
 
           return validate(validator).then(() => payload);
         });
+    case 'OUTPUT': 
+      validator(payload).required().isObject(obj => {
+        obj('id').required().isString();
+        obj('conversationcontext').required().isObject(obj => {
+          obj('user').required().isObject(obj => {
+            obj('_id').required().isString();
+            obj(`${_.get(payload, 'output.channel')}_id`).required().isString();
+            obj('locale').isString();
+          })
+        });
+        obj('output').required().isObject(obj => {
+          obj('channel').required().isString();
+          obj('intent').required().isString();
+          obj('locale').isString();
+          obj('context').isObject();
+          obj('message').isString();
+        });
+      });
+    
+      return validate(validator).then(() => payload);
     default:
       return Promise.reject({
         statusCode: 400,
