@@ -5,6 +5,7 @@ const config = require('./modules/config');
 const context = require('./modules/context');
 const db = require('./modules/db');
 const logger = require('./modules/logger');
+const send = require('./modules/send');
 const util = require('./modules/util');
 
 module.exports = (params) => {
@@ -15,6 +16,7 @@ module.exports = (params) => {
     context: context(params, ow),
     db: db(params, ow),
     log: logger(params, ow),
+    send: send(params, ow),
     util: util(params, ow)
   }
 }
