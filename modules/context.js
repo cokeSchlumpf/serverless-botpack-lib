@@ -4,7 +4,7 @@ module.exports = (params, ow) => {
   return {
     persist: (payload) => {
       const invokeParams = {
-        name: `${_.get(params.config, 'openwhisk.package')}/core-persistcontext`,
+        name: `${_.get(params.config, 'openwhisk.package')}/core-contextpersist`,
         blocking: true,
         result: true,
         params: { payload }
@@ -30,7 +30,7 @@ module.exports = (params, ow) => {
 
     load: (payload, user) => {
       const invokeParams = {
-        name: `${_.get(params.config, 'openwhisk.package')}/core-loadcontext`,
+        name: `${_.get(params.config, 'openwhisk.package')}/core-contextload`,
         blocking: true,
         result: true,
         params: { payload, user }
