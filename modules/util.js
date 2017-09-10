@@ -94,6 +94,7 @@ const validatePayload = (payload, state) => {
         });
         obj('output').required().isObject(obj => {
           obj('channel').required().isString();
+          obj('user').required().isString();
           obj('intent').required().isString();
           obj('locale').isString();
           obj('context').isObject();
@@ -101,6 +102,17 @@ const validatePayload = (payload, state) => {
         });
       });
     
+      return validate(validator).then(() => payload);
+    case 'STORE':
+      validator(payload).required().isObject(obj => {
+        obj('id').required().isString();
+        obj('conversationcontext').required().isObject(obj => {
+          obj('user').required().isObject(obj => {
+            obj('_id').required().isString();
+          })
+        });
+      });
+
       return validate(validator).then(() => payload);
     default:
       return Promise.reject({
