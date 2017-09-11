@@ -21,7 +21,7 @@ module.exports = (params, ow) => (intent, context = {}, outputparams = {}) => {
           }
         })
       } else {
-        _.set(params, 'payload', payload);
+        _.set(params, 'payload', result.result);
         return result.result;
       }
     });
