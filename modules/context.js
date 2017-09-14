@@ -2,12 +2,12 @@ const _ = require('lodash');
 
 module.exports = (params, ow) => {
   return {
-    persist: (payload) => {
+    persist: (payload, force = false) => {
       const invokeParams = {
         name: `${_.get(params.config, 'openwhisk.package')}/core-contextpersist`,
         blocking: true,
         result: true,
-        params: { payload }
+        params: { payload, force }
       }
 
       return ow.actions.invoke(invokeParams)

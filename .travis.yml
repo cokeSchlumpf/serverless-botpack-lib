@@ -9,3 +9,7 @@ deploy:
   on:
     tags: true
     repo: cokeSchlumpf/serverless-botpack-lib
+notifications:
+  email:
+    on_success: never # default: change
+    on_failure: always # default: always
