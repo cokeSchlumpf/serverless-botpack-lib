@@ -333,7 +333,7 @@ describe('util', () => {
   describe('util.dateTime', () => {
     describe('now', () => {
       it('returns the current timestamp', () => {
-        const config = {}
+        const config = {};
 
         const timestamp = requireMock
           .reRequire('../index')({ config })
@@ -342,5 +342,21 @@ describe('util', () => {
         chai.assert.isNumber(timestamp);
       });
     });
+
+    describe('olderThan', () => {
+      it('retuens true, if a given timestamp is older than the given duration from now', () => {
+        const util = requireMock.reRequire('../index')({ config: {} }).util.dateTime;
+        const timestamp = util.now() - 60 * 60 * 24 - 10;
+
+        chai.assert.isTrue(util.olderThan(timestamp, '1d'));
+      });
+
+      it('retuens false, if a given timestamp is newer than the given duration from now', () => {
+        const util = requireMock.reRequire('../index')({ config: {} }).util.dateTime;
+        const timestamp = util.now() - 60 * 60 * 24 + 10;
+
+        chai.assert.isFalse(util.olderThan(timestamp, '1d'));
+      });
+    })
   });
 })

@@ -1,6 +1,7 @@
 const _ = require('lodash');
-const Validator = require('better-validator');
+const ms = require('ms');
 const logger = require('./logger');
+const Validator = require('better-validator');
 
 const defaultAsyncResultHandler = (log) => (result) => {
   const statusCode = _.get(result, 'statusCode');
@@ -35,7 +36,15 @@ const defaultErrorHandler = (error) => {
 }
 
 const dateTime = {
-  now: () => _.round(new Date().getTime() / 1000)
+  now: () => {
+    return _.round(new Date().getTime() / 1000)
+  },
+  olderThan: (timestamp, duration) => {
+    const durationMs = _.round(ms(duration) / 1000);
+    const now = dateTime.now();
+
+    return now - durationMs > timestamp;
+  }
 }
 
 const validate = (validator, f) => {
