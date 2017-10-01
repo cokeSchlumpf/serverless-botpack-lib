@@ -210,14 +210,14 @@ describe('util', () => {
       // create stubs for actual functions
       const invokeStub = sinon.stub()
         .returns(Promise.resolve());
-  
+
       // mock openwhisk action calls to return successful results
       requireMock('openwhisk', () => ({
         actions: {
           invoke: invokeStub
         }
       }));
-  
+
       // sample configuration used for the test
       const config = {
         logger: {
@@ -227,9 +227,9 @@ describe('util', () => {
           package: 'testpackage'
         }
       };
-  
+
       requireMock.reRequire('openwhisk');
-  
+
       return requireMock
         .reRequire('../index')({ config })
         .util.defaultAsyncResultHandler({
@@ -250,14 +250,14 @@ describe('util', () => {
       // create stubs for actual functions
       const invokeStub = sinon.stub()
         .returns(Promise.resolve());
-  
+
       // mock openwhisk action calls to return successful results
       requireMock('openwhisk', () => ({
         actions: {
           invoke: invokeStub
         }
       }));
-  
+
       // sample configuration used for the test
       const config = {
         logger: {
@@ -267,9 +267,9 @@ describe('util', () => {
           package: 'testpackage'
         }
       };
-  
+
       requireMock.reRequire('openwhisk');
-  
+
       return requireMock
         .reRequire('../index')({ config })
         .util.defaultAsyncResultHandler({
@@ -328,5 +328,19 @@ describe('util', () => {
           chai.expect(result.error.cause).to.exist;
         });
     })
+  });
+
+  describe('util.dateTime', () => {
+    describe('now', () => {
+      it('returns the current timestamp', () => {
+        const config = {}
+
+        const timestamp = requireMock
+          .reRequire('../index')({ config })
+          .util.dateTime.now();
+
+        chai.assert.isNumber(timestamp);
+      });
+    });
   });
 })

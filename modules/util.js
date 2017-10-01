@@ -34,6 +34,10 @@ const defaultErrorHandler = (error) => {
   }
 }
 
+const dateTime = {
+  now: () => _.round(new Date().getTime() / 1000)
+}
+
 const validate = (validator, f) => {
   const errors = validator.run();
 
@@ -128,6 +132,7 @@ module.exports = (params, ow) => {
   const log = logger(params, ow);
 
   return {
+    dateTime,
     defaultAsyncResultHandler: defaultAsyncResultHandler(log),
     defaultErrorHandler,
     validate,
