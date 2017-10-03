@@ -7,6 +7,7 @@ const db = require('./modules/db');
 const logger = require('./modules/logger');
 const send = require('./modules/send');
 const util = require('./modules/util');
+const wcs = require('./modules/wcs');
 
 module.exports = (params) => {
   const ow = openwhisk();
@@ -17,6 +18,7 @@ module.exports = (params) => {
     db: db(params, ow),
     log: logger(params, ow),
     send: send(params, ow),
-    util: util(params, ow)
+    util: util(params, ow),
+    wcs: wcs(params, ow)
   }
 }
