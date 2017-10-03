@@ -47,7 +47,6 @@ const dateTime = (params) => {
     olderThan: (timestamp, duration, offset) => {
       const durationMs = _.round(ms(duration) / 1000);
       const now = dateTime(params).now(offset);
-
       return now - durationMs > timestamp;
     }
   };
