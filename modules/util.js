@@ -22,6 +22,8 @@ const defaultAsyncResultHandler = (log) => (result) => {
 }
 
 const defaultErrorHandler = (error) => {
+  console.log(error);
+  
   if (_.get(error, 'error.message') && _.get(error, 'statusCode')) {
     return Promise.resolve(error);
   } else {
