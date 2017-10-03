@@ -59,7 +59,7 @@ describe('callByName', () => {
     return requireMock
       .reRequire('../index')({ config, payload })
       .wcs.callByName('test_service')
-      .then(payload => {
+      .then(message => {
         chai.expect(invokeStub.getCall(0).args[0].name).to.equal('testpackage/middleware-wcs');
         chai.expect(invokeStub.getCall(0).args[0].params.workspace).to.equal('test-workspace');
         chai.expect(invokeStub.getCall(0).args[0].params.contextpath).to.equal('wcs__test_service');
@@ -68,6 +68,8 @@ describe('callByName', () => {
         chai.expect(payload.context.wcs__test_service.message).to.equal('Hello World');
         chai.expect(payload.context.wcs__test_service.lorem).to.equal('ipsum');
         chai.expect(payload.conversationcontext.wcs__test_service.foo).to.equal('bar');
+
+        chai.expect(message).to.equal('Hello World');
       });
   });
 });
