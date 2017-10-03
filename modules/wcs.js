@@ -21,7 +21,8 @@ module.exports = (params, ow) => {
           _.set(params, `payload.conversationcontext.wcs__${service_name}`, _.get(result, `payload.conversationcontext.wcs__${service_name}`));
           _.set(params, `payload.context.wcs__${service_name}`, _.get(result, `payload.context.wcs__${service_name}`));
           _.set(params, `payload.context.wcs__${service_name}.message`, _.get(result, `payload.context.wcs__${service_name}.message`));
-          return Promise.resolve(params.payload);
+          
+          return Promise.resolve(_.get(params, `payload.context.wcs__${service_name}.message`));
         } else {
           // TODO: Improve error handling
           return Promise.reject(result);
