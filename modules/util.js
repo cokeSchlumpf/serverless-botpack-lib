@@ -35,16 +35,22 @@ const defaultErrorHandler = (error) => {
   }
 }
 
-const dateTime = {
-  now: () => {
-    return _.round(new Date().getTime() / 1000)
-  },
-  olderThan: (timestamp, duration) => {
-    const durationMs = _.round(ms(duration) / 1000);
-    const now = dateTime.now();
+const dateTime = (params) => {
+  return {
+    now: () => {
+      const timezoneOffset = _.get(params, 'payload.conversationcontext.user.timezone', 0);
+      const d = new Date();
+      const utc = d.getTime() - (d.getTimezoneOffset() * 60000);
+      const nd = new Date(utc + (3600000 * timezoneOffset));
+      return _.round(nd.getTime() / 1000);
+    },
+    olderThan: (timestamp, duration) => {
+      const durationMs = _.round(ms(duration) / 1000);
+      const now = dateTime(params).now();
 
-    return now - durationMs > timestamp;
-  }
+      return now - durationMs > timestamp;
+    }
+  };
 }
 
 const validate = (validator, f) => {
@@ -95,7 +101,7 @@ const validatePayload = (payload, state) => {
 
           return validate(validator).then(() => payload);
         });
-    case 'OUTPUT': 
+    case 'OUTPUT':
       validator(payload).required().isObject(obj => {
         obj('id').required().isString();
         obj('conversationcontext').required().isObject(obj => {
@@ -114,7 +120,7 @@ const validatePayload = (payload, state) => {
           obj('message').isString();
         });
       });
-    
+
       return validate(validator).then(() => payload);
     case 'STORE':
       validator(payload).required().isObject(obj => {
@@ -141,7 +147,7 @@ module.exports = (params, ow) => {
   const log = logger(params, ow);
 
   return {
-    dateTime,
+    dateTime: dateTime(params),
     defaultAsyncResultHandler: defaultAsyncResultHandler(log),
     defaultErrorHandler,
     validate,
