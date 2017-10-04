@@ -29,7 +29,8 @@ module.exports = (params, ow) => {
   }
 
   const sendSignals = (signals, context = {}, outputparams = {}) => {
-    return sendText(_.join(_.concat(signals, _.get(params, 'payload.context.signals', [])), ' '), context, outputparams);
+    const signalsArr = _.isArray(signals) ? signals : [ signals ];
+    return sendText(_.join(_.concat(signalsArr, _.get(params, 'payload.context.signals', [])), ' '), context, outputparams);
   }
 
   return {
