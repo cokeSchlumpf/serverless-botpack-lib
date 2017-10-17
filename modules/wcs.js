@@ -20,7 +20,7 @@ module.exports = (params, ow) => {
         if (result.statusCode === 200) {
           _.set(params, `payload.conversationcontext.wcs__${service_name}`, _.get(result, `payload.conversationcontext.wcs__${service_name}`));
           _.set(params, `payload.context.wcs__${service_name}`, _.get(result, `payload.context.wcs__${service_name}`));
-          _.set(params, `payload.context.wcs__${service_name}.message`, _.trim(_.get(result, `payload.context.wcs__${service_name}.message`)));
+          _.set(params, `payload.context.wcs__${service_name}.message`, _.get(result, `payload.context.wcs__${service_name}.message`));
           
           return Promise.resolve(_.get(params, `payload.context.wcs__${service_name}.message`));
         } else {
